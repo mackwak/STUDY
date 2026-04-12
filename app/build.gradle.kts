@@ -18,7 +18,7 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 } else {
     // CI 환경을 위해 환경 변수에서 매핑 (GitHub Secrets 활용 시)
-    setProperty("storeFile", System.getenv("KEYSTORE_FILE_PATH") ?: "")
+    setProperty("storeFile", System.getenv("STOREFILE") ?: "")
     setProperty("storePassword", System.getenv("KEYSTORE_PASSWORD") ?: "")
     setProperty("keyAlias", System.getenv("KEY_ALIAS") ?: "")
     setProperty("keyPassword", System.getenv("KEY_PASSWORD") ?: "")
