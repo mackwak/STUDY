@@ -15,13 +15,14 @@ plugins {
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    // 파일이 있을 때는 파일에서 로드
+    keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
 } else {
-    // CI 환경을 위해 환경 변수에서 매핑 (GitHub Secrets 활용 시)
-    setProperty("storeFile", System.getenv("STOREFILE") ?: "")
-    setProperty("storePassword", System.getenv("KEYSTORE_PASSWORD") ?: "")
-    setProperty("keyAlias", System.getenv("KEY_ALIAS") ?: "")
-    setProperty("keyPassword", System.getenv("KEY_PASSWORD") ?: "")
+    // 파일이 없을 때(CI 환경), 반드시 'keystoreProperties' 객체에 직접 값을 설정해야 합니다.
+    keystoreProperties.setProperty("storeFile", System.getenv("STOREFILE") ?: "")
+    keystoreProperties.setProperty("storePassword", System.getenv("KEYSTORE_PASSWORD") ?: "")
+    keystoreProperties.setProperty("keyAlias", System.getenv("KEY_ALIAS") ?: "")
+    keystoreProperties.setProperty("keyPassword", System.getenv("KEY_PASSWORD") ?: "")
 }
 
 // Add reading local Shopify token for BuildConfig
