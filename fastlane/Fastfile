@@ -149,7 +149,7 @@ lane :build do |options|
            if flavor == "developmentExtra"
 
                          app_id = "1:966285816680:android:c0f142e7638d17119d5cdd"
-
+                         puts "📈 FIREBASE_TOKEN: #{ENV["FIREBASE_TOKEN"]}"
                          # 1. Fetch the latest release metadata
                          # Note: Ensure FIREBASE_TOKEN is in your .env or Environment Variables
                          latest_release = firebase_app_distribution_get_latest_release(app: app_id, firebase_cli_token: ENV["FIREBASE_TOKEN"])
